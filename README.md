@@ -1,7 +1,11 @@
 # Dog-Breed-Recognizer
-The project is about Convolutional Neural Network that performs better than the average human to identify dog breeds. Given an image of a dog, the algorithm will produce an estimate of the dog’s breed. If given an image of a human, the output would be an estimate of the closest-resembling dog breed. Along with exploring pre-trained CNN models such as VGG, Resnet, Inception for classification, the goal is to get an insight to make important design decisions when it comes to transfer learning.
+The project is about Convolutional Neural Network that performs better than the average human to identify dog breeds. Given an image of a dog, the algorithm will produce an estimate of the dog’s breed. If given an image of a human, the output would be an estimate of the closest-resembling dog breed. Along with exploring pre-trained CNN models such as VGG, Resnet, Inception for classification, the goal is to get an insight how to finetune and use a pretrained network and apply it to a new task using transfer learning.
 
 [Kaggle Dog Breed Indendification](https://www.kaggle.com/c/dog-breed-identification)
+
+## Background
+Image Classification is now considered a fairly solved problem thanks to state-of-art deep learning models which were presented thrugh ImageNet competition. ImageNet is a visual Dataset that contains more than 15 million of labeled high-resolution images covering almost 22,000 categories.VGG-16 is a Convolutional Neural Network model that was proposed by the researchers of the University of Oxford. VGG-16 had secured 1st runners up position in the 2014 ImageNet competition with an error rate of 7.3%. In VGG-16 the main characteristic is that it uses several 3×3 kernel-sized filters consecutively. The hidden layers of the network leverage ReLU activation functions. VGG-16 is however very slow to train and the network weights, when saved on disk, occupy a large space.
+ResNet (Residual Network) was created by the Microsoft Research team and won the 2015 ImageNet competition with and the error rate of 3.57%.The idea of using numerous hidden layers and extremely deep neural networks was implemented by a lot of models but then it was realized that such models were suffering from vanishing or exploding gradients problem. Inception was Google’s developed image classification deep learning model that was the winner of the 2015 ImageNet challenge with an error rate of 6.67%.The idea behind the architecture was to design a really deep network with 22 layers by choosing 1×1 convolutional along with ReLU to increase computational efficiency by reducing the dimensions and number of operations.
 
 ## Step 0: Import Datasets
 * 13233 total human images
@@ -21,18 +25,15 @@ Keep the 1st one for human detector
 Using PyTorch's pre-trained VGG-16 Model, output index is 151-268 for dog identification.
 Data Transform pipeline
 ```python
-in_transform = transforms.Compose([
+data_transform = transforms.Compose([
                                     transforms.RandomResizedCrop(250),
                                     transforms.ToTensor(),
                                     transforms.Normalize((0.485, 0.456, 0.406),
                                                         (0.229, 0.224, 0.225))])
 ```
-VGG Human is detected as Dog : 0.05
-VGG Dog Accuracy : 0.98
+VGG-16 Human is detected as Dog : 0.04
+VGG-16 Dog Accuracy : 0.99
 Other human detector
-
-Inception
-
 
 ## Step3: Build own CNN
 batch_size =32, learn_rate=0.01
@@ -43,7 +44,7 @@ No drop out: just 3 (Conv+relu + Max pooling ) + 2 fully connected layer
 
 3. Using Data Augmentation (Horizontal Flip, Random Rotation)
 ```python
-in_transform = transforms.Compose([
+data_transform = transforms.Compose([
                                     transforms.RandomResizedCrop(224),
                                     transforms.RandomHorizontalFlip(),
                                     transforms.RandomVerticallFlip(),
@@ -52,7 +53,8 @@ in_transform = transforms.Compose([
                                     transforms.Normalize([0.485, 0.456, 0.406],
                                                         [0.229, 0.224, 0.225])])
 ```
-
+Epoch: 30 	Training Loss: 3.335449 	Validation Loss: 4.074869
+Test Accuracy: 10.52% (88/836)
 
 ## Step4: Using Transfer Learning
 Pytorch's pre-trained model
@@ -93,8 +95,25 @@ transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
 ```
 
 1. Resnet50 from Pytorch
-CrossEntry Liss, SGD optimizer , learn rate = 0.001
+CrossEntry Liss, SGD optimizer , learn rate = 0.005
+```python
+criterion_transfer = nn.CrossEntropyLoss()
+optimizer_transfer = optim.SGD(model_transfer.fc.parameters(), lr=0.005)
+```
+Epoch: 10 	Training Loss: 2.405513 	Validation Loss: 1.714103 ....
 Epoch: 20     Training Loss: 1.907578     Validation Loss: 1.498481
 Validation loss decreased (1.595233 --> 1.498481).  Saving model ...
-Test Loss: 1.422683
-Test Accuracy: 70% (587/836)
+Test Loss: 1.679269
+Test Accuracy: 71% (601/836)
+
+#### Next Task 
+1. Object Classification [O]
+2. Image Classification and Localization [O]
+3. Object Detection [O]
+4. Semantic and Instance Segmentation [O]
+5. Object Tracking [O]
+6. Image Captioning [ ] - next thing to do 
+7. Image Generation [ ]
+8. Image Enhancement/Colorization [ ]
+9. Image Style Transfer[O]
+10. Image Construction
