@@ -71,13 +71,13 @@ torchvision.models.resnet50(pretrained=True) ###Resnet-50
 * Inception v3 model architecture from [“Rethinking the Inception Architecture for Computer Vision"](http://arxiv.org/abs/1512.00567). Each inception module consists of four operations in parallel ; 1x1 conv laer, 3x3 conv layer , 55 conv layer, max pooling layer. if the images in the data-set are rich in global features without too many low-level features, then the trained Inception network will have very small weights corresponding to the 3x3 conv kernel as compared to the 5x5 conv kernel.
 
 ```python
-torchvision.models.inception_v3(pretrained=True) ###Inveption v3 model
+torchvision.models.inception_v3(pretrained=True) ###Inception v3 model
 ```
 0. Pytorch's pretrained model
 ```python
 torchvision.models.vgg16(pretrained=True) ## VGG16
 torchvision.models.resnet50(pretrained=True) ###Resnet-50
-torchvision.models.inception_v3(pretrained=True) ###Inveption v3 model
+torchvision.models.inception_v3(pretrained=True) ###Inception v3 model
 ```
 > As for Inception v3 model, Important: In contrast to the other models the inception_v3 expects tensors with a size of N x 3 x 299 x 299, so ensure your images are sized accordingly.
 > RGB images of shape (3 x H x W), where H and W are expected to be at least 299
