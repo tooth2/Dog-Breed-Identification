@@ -1,5 +1,7 @@
 # Dog-Breed-Recognizer
-Using various kinds of deep learning methods such as CNN layers from scratch vs. using Pre-trained model such as VGG, ResNet, Inception ,this project is to identify dog breed when it comes to dog identification whereas as human , to recommend most similar dog breed to a human face in the image.
+The project is about Convolutional Neural Network that performs better than the average human to identify dog breeds. Given an image of a dog, the algorithm will produce an estimate of the dog’s breed. If given an image of a human, the output would be an estimate of the closest-resembling dog breed. Along with exploring pre-trained CNN models such as VGG, Resnet, Inception for classification, the goal is to get an insight to make important design decisions when it comes to transfer learning.
+
+[Kaggle Dog Breed Indendification](https://www.kaggle.com/c/dog-breed-identification)
 
 ## Step 0: Import Datasets
 * 13233 total human images
