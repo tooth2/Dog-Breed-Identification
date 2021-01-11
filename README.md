@@ -35,36 +35,64 @@ Inception
 ## Step3: Build own CNN
 batch_size =32, learn_rate=0.01
 1. Using same data transform pipleline
-Performance:
-Epoch: 20     Training Loss: 3.915724     Validation Loss: 4.209987
-Validation loss decreased (4.257086 --> 4.209987)
 No drop out: just 3 (Conv+relu + Max pooling ) + 2 fully connected layer
-Test Loss: 4.178142
-Test Accuracy:  7% (62/836)
 
 2. Added Dropout (0.25) for between fc1 before the output
-Performance:
-
 
 3. Using Data Augmentation (Horizontal Flip, Random Rotation)
 ```python
 in_transform = transforms.Compose([
                                     transforms.RandomResizedCrop(224),
                                     transforms.RandomHorizontalFlip(),
+                                    transforms.RandomVerticallFlip(),
                                     transforms.RandomRotation(20),
                                     transforms.ToTensor(),
                                     transforms.Normalize([0.485, 0.456, 0.406],
                                                         [0.229, 0.224, 0.225])])
 ```
-Performance:
 
 
 ## Step4: Using Transfer Learning
+Pytorch's pre-trained model
+All pre-trained models expect input images normalized in the same way, i.e. mini-batches of 3-channel RGB images of shape (3 x H x W), where H and W are expected to be at least 224.
+```python
+normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
+std=[0.229, 0.224, 0.225])
+```
+There are three pre-trained models explorered .
+* VGG 16-layer model (configuration “D”) [“Very Deep Convolutional Networks For Large-Scale Image Recognition”](https://arxiv.org/pdf/1409.1556.pdf). VGG16 is constructed with all the conv kernels are of size 3x3 and maxpool kernels are of size 2x2 with a stride of two. VGG's reduced number of trainable variables helped faster learning and more robust to over-fitting.
+ ```python
+torchvision.models.vgg16(pretrained=True) ## VGG16
+```
+* ResNet-50 model from [“Deep Residual Learning for Image Recognition”](https://arxiv.org/pdf/1512.03385.pdf) ResNet architecture makes use of shortcut connections do solve the vanishing gradient problem.
+```python
+torchvision.models.resnet50(pretrained=True) ###Resnet-50
+```
+* Inception v3 model architecture from [“Rethinking the Inception Architecture for Computer Vision"](http://arxiv.org/abs/1512.00567). Each inception module consists of four operations in parallel ; 1x1 conv laer, 3x3 conv layer , 55 conv layer, max pooling layer. if the images in the data-set are rich in global features without too many low-level features, then the trained Inception network will have very small weights corresponding to the 3x3 conv kernel as compared to the 5x5 conv kernel.
+
+```python
+torchvision.models.inception_v3(pretrained=True) ###Inveption v3 model
+```
+0. Pytorch's pretrained model
+```python
+torchvision.models.vgg16(pretrained=True) ## VGG16
+torchvision.models.resnet50(pretrained=True) ###Resnet-50
+torchvision.models.inception_v3(pretrained=True) ###Inveption v3 model
+```
+> As for Inception v3 model, Important: In contrast to the other models the inception_v3 expects tensors with a size of N x 3 x 299 x 299, so ensure your images are sized accordingly.
+> RGB images of shape (3 x H x W), where H and W are expected to be at least 299
+```python
+preprocess = transforms.Compose([
+transforms.Resize(299),
+transforms.CenterCrop(299),
+transforms.ToTensor(),
+transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+])
+```
+
 1. Resnet50 from Pytorch
 CrossEntry Liss, SGD optimizer , learn rate = 0.001
 Epoch: 20     Training Loss: 1.907578     Validation Loss: 1.498481
 Validation loss decreased (1.595233 --> 1.498481).  Saving model ...
 Test Loss: 1.422683
 Test Accuracy: 70% (587/836)
-
-2. Inception3?
