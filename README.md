@@ -1,4 +1,4 @@
-# Dog-Breed-Recognizer
+# Dog-Breed-Identification
 The project is about Convolutional Neural Network that performs better than the average human to identify dog breeds. Given an image of a dog, the algorithm will produce an estimate of the dog’s breed. If given an image of a human, the output would be an estimate of the closest-resembling dog breed. Along with exploring pre-trained CNN models such as VGG, Resnet, Inception for classification, the goal is to get an insight how to finetune and use a pretrained network and apply it to a new task using transfer learning.
 
 [Kaggle Dog Breed Indendification](https://www.kaggle.com/c/dog-breed-identification)
@@ -106,6 +106,8 @@ Validation loss decreased (1.595233 --> 1.498481).  Saving model ...
 Test Loss: 1.679269
 Test Accuracy: 71% (601/836)
 
+## Discussion 
+By trasfer learning using ResNet50 pretrained model, Performance is increased by 71%. That shows it is great way to use pre-trained model especially for image classification problem thanks to ImageNet's massive data set and augmented lables. Resnet takes long time to train however by suing Cuda, it helped to train efficiently on GPU environment. When training loss is dramatically lower than validation loss, it would be better to increase Dropout rate since this shows overfitting stage. When training loss is very similar to validation loss, underfitting case is suspected. In that case, adding more layers would help. I explored number of epochs along with learning rate  until delta training loss is saturated. 
 #### Next Task 
 1. Object Classification [O]
 2. Image Classification and Localization [O]
