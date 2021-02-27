@@ -109,13 +109,13 @@ Test Accuracy: 71% (601/836)
 ## Discussion 
 By trasfer learning using ResNet50 pretrained model, Performance is increased by 71%. That shows it is great way to use pre-trained model especially for image classification problem thanks to ImageNet's massive data set and augmented lables. Resnet takes long time to train however by suing Cuda, it helped to train efficiently on GPU environment. When training loss is dramatically lower than validation loss, it would be better to increase Dropout rate since this shows overfitting stage. When training loss is very similar to validation loss, underfitting case is suspicious. In that case, adding more layers would help. I explored number of epochs along with learning rate  until delta training loss is saturated. 
 #### Next Task 
-[x] 1. Object Classification
-[x] 2. Image Classification and Localization
-[x] 3. Object Detection
-[x] 4. Semantic and Instance Segmentation
-[x] 5. Object Tracking
-[x] 6. Image Captioning 
-[x] 7. Image Generation
-[ ] 8. Image Enhancement/Colorization
-[x] 9. Image Style Transfer
-[ ] 10. Image Construction
+- [x] 1. Object Classification
+- [x] 2. Image Classification and Localization
+- [x] 3. Object Detection
+- [x] 4. Semantic and Instance Segmentation
+- [x] 5. Object Tracking
+- [x] 6. Image Captioning 
+- [x] 7. Image Generation
+- [ ] 8. Image Enhancement/Colorization
+- [x] 9. Image Style Transfer
+- [ ] 10. Image Construction
